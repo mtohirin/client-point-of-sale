@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index - customer</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Index Customer</h1>
+<button><a th:href="@{~/customer/add}">Add Customer</a></button>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <body>
+    <tr th:each="customer : ${customer}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.phone}"></td>
+        <td th:text="${customer.address}"></td>
+
+        <td>
+            <a th:href="@{/customer/edit/{id} (id=${customer.id})}">EDIT</a>
+            <a th:href="@{/customer/delete/{id} (id=${customer.id})}">DELETE</a>
+            <a th:href="@{/customer/detail/{id} (id=${customer.id})}">DETAIL</a>
+        </td>
+    </tr>
+    </body>
+</table>
+</body>
+</html>

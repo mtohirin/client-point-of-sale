@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>detail - category</title>
+</head>
+<body>
+<h1>Detail Category</h1>
+<form th:action="@{/category/detail}" method="get">
+
+    <label for="id">ID</label>
+    <input id="id" type="text" th:value="${category.id}" readonly>
+
+    <label for="name">Name</label>
+    <input id="name" type="text" th:value="${category.name}" readonly>
+
+    <button>
+        <a th:href="@{~/category}">Back</a>
+    </button>
+</form>
+</body>
+</html>

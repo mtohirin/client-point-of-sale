@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>delete - category</title>
+</head>
+<body>
+<h1>Delete Category</h1>
+<form th:action="@{~/category/delete}" method="post">
+    <input type="hidden" name="id" th:value="${category.id}">
+
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name" th:value="${category.name}">
+
+    <button type="submit">Delete</button>
+    <button>
+        <a th:href="@{~/category}">Back</a>
+    </button>
+</form>
+
+</body>
+</html>

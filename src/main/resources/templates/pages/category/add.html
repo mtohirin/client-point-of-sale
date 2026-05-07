@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add - category</title>
+</head>
+<body>
+<h1>Add Category</h1>
+<form th:action="@{~/category/save}" method="post">
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name"><br>
+
+    <button type="submit">Save</button>
+    <button>
+        <a th:href="@{~/category}">Back</a>
+    </button>
+</form>
+</body>
+</html>
