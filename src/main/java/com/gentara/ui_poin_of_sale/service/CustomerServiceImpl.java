@@ -3,7 +3,6 @@ package com.gentara.ui_poin_of_sale.service;
 import com.gentara.ui_poin_of_sale.constant.BackEndUrl;
 import com.gentara.ui_poin_of_sale.model.request.CustomerReq;
 import com.gentara.ui_poin_of_sale.model.response.CustomerRes;
-import com.gentara.ui_poin_of_sale.model.response.ProductRes;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;

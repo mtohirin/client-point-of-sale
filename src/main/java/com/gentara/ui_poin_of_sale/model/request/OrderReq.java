@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderReq {
+    private String id;
     private String orderNumber;
     private String customerId;
     private OrderStatus orderStatus;

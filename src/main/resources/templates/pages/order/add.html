@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>add - order</title>
+</head>
+<body>
+<h1>Add Order</h1>
+<form th:action="@{~/order/save}" method="post">
+    <label for="orderNumber">Order Number</label>
+    <input id="orderNumber" type="text" name="orderNumber"><br>
+
+    <label for="orderDate">Order Date</label>
+    <input id="orderDate" type="datetime-local" name="orderDate"><br>
+
+    <label for="customer">Customer</label>
+    <select id="customer" name="customerId">
+        <option th:each="customer : ${customers}"
+                th:value="${customer.id}"
+                th:text="${customer.name}">
+        </option>
+    </select>
+    <br>
+
+    <label for="orderStatus">Status</label>
+    <select id="orderStatus" name="orderStatus">
+        <option th:each="status : ${statuses}"
+                th:value="${status}"
+                th:text="${status}">
+        </option>
+    </select>
+    <br>
+
+    <label for="paymentMethod">Payment Method</label>
+    <select id="paymentMethod" name="paymentMethod">
+        <option th:each="pay : ${methods}"
+                th:value="${pay}"
+                th:text="${pay}">
+        </option>
+    </select>
+    <br>
+
+    <h3>Order Items</h3>
+    <div id="items-container">
+        <div class="item-row">
+            <select name="items[0].productId" onchange="updatePrice(this)">
+                <option th:each="product : ${products}"
+                        th:value="${product.id}"
+                        th:data-price="${product.price}"
+                        th:text="${product.name} + ' - Rp ' + ${product.price}">
+                </option>
+            </select>
+            <input type="number" name="items[0].quantity" placeholder="Quantity" value="1" onchange="updateSubtotal(this)">
+            <input type="hidden" name="items[0].price" class="price-input">
+            <input type="hidden" name="items[0].subtotal" class="subtotal-input">
+            <button type="button" onclick="removeItem(this)">Remove</button>
+            <span class="subtotal-display"></span>
+        </div>
+    </div>
+
+    <button type="button" onclick="addItem()">Add Product</button>
+    <br><br>
+
+    <button type="submit">Save</button>
+    <button>
+        <a th:href="@{~/order}">Back</a>
+    </button>
+</form>
+
+<script>
+    let itemIndex = 1;
+
+    function addItem() {
+        const container = document.getElementById('items-container');
+        const newDiv = document.createElement('div');
+        newDiv.className = 'item-row';
+
+        // Ambil opsi select dari baris pertama sebagai template
+        const firstSelect = document.querySelector('#items-container .item-row select');
+        const optionsHtml = firstSelect.innerHTML;
+
+        newDiv.innerHTML = `
+            <select name="items[${itemIndex}].productId" onchange="updatePrice(this)">
+                ${optionsHtml}
+            </select>
+            <input type="number" name="items[${itemIndex}].quantity" placeholder="Quantity" value="1" onchange="updateSubtotal(this)">
+            <input type="hidden" name="items[${itemIndex}].price" class="price-input">
+            <input type="hidden" name="items[${itemIndex}].subtotal" class="subtotal-input">
+            <button type="button" onclick="removeItem(this)">Remove</button>
+            <span class="subtotal-display"></span>
+        `;
+        container.appendChild(newDiv);
+        itemIndex++;
+    }
+
+    function removeItem(button) {
+        button.parentElement.remove();
+    }
+
+    function updatePrice(selectElement) {
+        const row = selectElement.parentElement;
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+        const priceInput = row.querySelector('.price-input');
+        priceInput.value = price;
+        updateSubtotal(row.querySelector('input[type="number"]'));
+    }
+
+    function updateSubtotal(quantityInput) {
+        const row = quantityInput.parentElement;
+        const price = row.querySelector('.price-input').value;
+        const quantity = quantityInput.value;
+        const subtotal = price * quantity;
+
+        const subtotalInput = row.querySelector('.subtotal-input');
+        subtotalInput.value = subtotal;
+
+        const subtotalDisplay = row.querySelector('.subtotal-display');
+        subtotalDisplay.textContent = 'Subtotal: Rp ' + subtotal;
+    }
+
+    // Trigger price untuk baris pertama saat halaman load
+    window.onload = function() {
+        const firstSelect = document.querySelector('#items-container .item-row select');
+        if (firstSelect) {
+            updatePrice(firstSelect);
+        }
+    }
+</script>
+</body>
+</html>

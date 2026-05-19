@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>index - order</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Index Order</h1>
+<button><a th:href="@{~/order/add}">Add Order</a></button>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Order Number</th>
+        <th>Order Date</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Payment Method</th>
+        <th>Items</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <body>
+    <tr th:each="order : ${order}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.orderNumber}"></td>
+        <td th:text="${order.orderDate}"></td>
+        <td th:text="${order.customer.name}"></td>
+        <td th:text="${order.orderStatus}"></td>
+        <td th:text="${order.paymentMethod}"></td>
+        <td>
+    <span th:each="item, iterStat : ${order.items}">
+        <span th:text="${item.product.name}"></span><span th:if="${!iterStat.last}">, </span>
+    </span>
+        </td>
+
+        <td>
+            <a th:href="@{/order/edit/{id} (id=${order.id})}">EDIT</a>
+            <a th:href="@{/order/delete/{id} (id=${order.id})}">DELETE</a>
+            <a th:href="@{/order/detail/{id} (id=${order.id})}">DETAIL</a>
+        </td>
+    </tr>
+    </body>
+</table>
+</body>
+</html>

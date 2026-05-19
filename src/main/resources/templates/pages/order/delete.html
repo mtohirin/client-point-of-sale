@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>delete - order</title>
+</head>
+<body>
+<h1>Delete Order</h1>
+<form th:action="@{~/remove}" method="post">
+    <input type="hidden" name="id" th:value="${orders.id}">
+
+    <label for="orderNumber">Order Number</label>
+    <input id="orderNumber" type="text" name="orderNumber" th:value="${orders.orderNumber}"><br>
+</form>
+</body>
+</html>
