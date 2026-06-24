@@ -60,7 +60,13 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public OrderRes update(String id, OrderReq request) {
-        return null;
+        try {
+            String url = Strings.concat(backEndUrl.orderUrl(), "/" + id);
+            OrderRes response = restTemplate.patchForObject(url, request, OrderRes.class);
+            return response;
+        } catch (RestClientException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
